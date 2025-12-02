@@ -15,9 +15,9 @@ namespace JWTAuthentication.Controllers
         [HttpPost("register")]
         public ActionResult<User> Register(UserDto userDto)
         {
-            string hashedPassword = new PasswordHasher<User>().HashPassword(user, userDto.Password);
+            string passwordHash = new PasswordHasher<User>().HashPassword(user, userDto.Password);
             user.Username = userDto.Username;
-            user.PasswordHash = hashedPassword;
+            user.PasswordHash = passwordHash;
             return Ok(user);
         }
 
