@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace JWTAuthentication.Controllers
 {
     [ApiController]
-    public class AuthController : ControllerBase
     [Route("api/[controller]/[action]")]
+    public class AuthController(IConfiguration configuration) : ControllerBase
     {
         // Temporary, until there is no database
         private static User user = new User();
