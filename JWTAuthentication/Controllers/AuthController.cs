@@ -42,7 +42,7 @@ namespace JWTAuthentication.Controllers
 
             if (authenticated)
             {
-                const string token = "success";
+                string token = CreateToken(user);
                 return Ok(token);
             }
             else
