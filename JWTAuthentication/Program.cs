@@ -1,4 +1,5 @@
 using JWTAuthentication.Data;
+using JWTAuthentication.Services;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -19,6 +20,8 @@ if(connectionString == null)
 builder.Services.AddDbContext<UserDbContext>(
     options => options.UseSqlServer(connectionString)
     );
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
