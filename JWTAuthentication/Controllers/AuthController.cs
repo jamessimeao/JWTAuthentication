@@ -9,6 +9,7 @@ namespace JWTAuthentication.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
+        // Temporary, until there is no database
         private static User user = new User();
 
         [HttpPost("register")]
