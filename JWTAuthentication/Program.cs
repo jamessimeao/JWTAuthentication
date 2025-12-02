@@ -8,6 +8,12 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+string? connectionString = builder.Configuration.GetConnectionString("Default");
+if(connectionString == null)
+{
+    Console.WriteLine("Failed to read connection string.");
+    return ;
+}
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
