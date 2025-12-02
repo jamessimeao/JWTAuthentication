@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace JWTAuthentication.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
     public class AuthController : ControllerBase
+    [Route("api/[controller]/[action]")]
     {
         // Temporary, until there is no database
         private static User user = new User();
 
-        [HttpPost("register")]
+        [HttpPost]
         public ActionResult<User> Register(UserDto userDto)
         {
             string passwordHash = new PasswordHasher<User>().HashPassword(user, userDto.Password);
@@ -21,7 +21,7 @@ namespace JWTAuthentication.Controllers
             return Ok(user);
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         public ActionResult<string> Login(UserDto userDto)
         {
             bool authenticated = false;
