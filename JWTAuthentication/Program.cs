@@ -1,3 +1,5 @@
+using JWTAuthentication.Data;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,10 @@ if(connectionString == null)
     Console.WriteLine("Failed to read connection string.");
     return ;
 }
+builder.Services.AddDbContext<UserDbContext>(
+    options => options.UseSqlServer(connectionString)
+    );
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
