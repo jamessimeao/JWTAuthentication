@@ -2,6 +2,10 @@
 using JWTAuthentication.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace JWTAuthentication.Controllers
 {
@@ -45,6 +49,27 @@ namespace JWTAuthentication.Controllers
             {
                 return BadRequest("Wrong username or password.");
             }
+        }
+
+        private string CreateToken(User user)
+        {
+            Dictionary<string, object> claims = new Dictionary<string, object>()
+            {
+                [ClaimTypes.Name] = user.Username
+            };
+            string config = configuration.GetValue<string>("AppSettings:Token")!;
+            byte[] data = Encoding.UTF8.GetBytes(config);
+            SymmetricSecurityKey key = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(data);
+            SigningCredentials credentials = new SigningCredentials(key,SecurityAlgorithms.HmacSha512);
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor()
+            {
+                Issuer = configuration.GetValue<string>("AppSettings:Issuer")!,
+                Audience = configuration.GetValue<string>("AppSettings:Audience")!,
+                Claims = claims,
+                Expires = DateTime.UtcNow.AddDays(1),
+                SigningCredentials = credentials
+            };
+            return new JsonWebTokenHandler().CreateToken(tokenDescriptor);
         }
     }
 }
