@@ -21,5 +21,29 @@ namespace JWTAuthentication.Controllers
             return Ok(user);
         }
 
+        [HttpPost("login")]
+        public ActionResult<string> Login(UserDto userDto)
+        {
+            bool authenticated = false;
+            if(userDto.Username == user.Username)
+            {
+                PasswordVerificationResult result = new PasswordHasher<User>().
+                                                        VerifyHashedPassword(user, user.PasswordHash, userDto.Password);
+                
+                 if(result == PasswordVerificationResult.Success)
+                {
+                    authenticated = true;
+                }
+            }
+
+            if (authenticated)
+            {
+                return Ok("Authenticated.");
+            }
+            else
+            {
+                return BadRequest("Wrong username or password.");
+            }
+        }
     }
 }
