@@ -25,9 +25,9 @@ namespace JWTAuthentication.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> LoginAsync(UserDto userDto)
+        public async Task<ActionResult<TokenResponseDto>> LoginAsync(UserDto userDto)
         {
-            string? token = await authService.LoginAsync(userDto);
+            TokenResponseDto? token = await authService.LoginAsync(userDto);
             if(token != null)
             {
                 return Ok(token);
