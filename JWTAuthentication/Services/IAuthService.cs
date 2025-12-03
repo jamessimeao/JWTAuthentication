@@ -7,5 +7,6 @@ namespace JWTAuthentication.Services
     {
         public Task<User?> RegisterAsync(UserDto userDto);
         public Task<TokenResponseDto?> LoginAsync(UserDto userDto);
+        public Task<TokenResponseDto?> RefreshTokensAsync(RefreshTokenRequestDto refreshTokenRequestDto);
     }
 }
