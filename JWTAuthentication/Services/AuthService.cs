@@ -89,5 +89,17 @@ namespace JWTAuthentication.Services
             string refreshToken = Convert.ToBase64String(randomBytes);
             return refreshToken;
         }
+
+        private async Task<string> GenerateAnsSaveRefreshTokenAsync(User user)
+        {
+            string refreshToken = GenerateRefreshToken();
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+
+            dbContext.Users.Update(user);
+
+            await dbContext.SaveChangesAsync();
+            return refreshToken;
+        }
     }
 }
