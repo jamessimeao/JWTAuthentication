@@ -60,6 +60,7 @@ namespace JWTAuthentication.Services
             {
                 [ClaimTypes.Name] = user.Username,
                 [ClaimTypes.NameIdentifier] = user.Id.ToString(),
+                [ClaimTypes.Role] = user.Role,
             };
             string config = configuration.GetValue<string>("AppSettings:Token")!;
             byte[] data = Encoding.UTF8.GetBytes(config);
