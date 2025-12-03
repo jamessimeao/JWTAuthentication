@@ -1,6 +1,7 @@
 ﻿using JWTAuthentication.Dtos;
 using JWTAuthentication.Entities;
 using JWTAuthentication.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JWTAuthentication.Controllers
@@ -35,6 +36,13 @@ namespace JWTAuthentication.Controllers
             {
                 return BadRequest("Wrong username or password.");
             }
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult AuthenticatedOnlyEndpoint()
+        {
+            return Ok("You are authenticated.");
         }
     }
 }
