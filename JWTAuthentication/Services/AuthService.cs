@@ -75,6 +75,7 @@ namespace JWTAuthentication.Services
                 Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = credentials
             };
+
             return new JsonWebTokenHandler().CreateToken(tokenDescriptor);
         }
 
