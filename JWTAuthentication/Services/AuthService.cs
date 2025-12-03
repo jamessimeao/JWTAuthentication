@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace JWTAuthentication.Services
@@ -75,6 +76,18 @@ namespace JWTAuthentication.Services
                 SigningCredentials = credentials
             };
             return new JsonWebTokenHandler().CreateToken(tokenDescriptor);
+        }
+
+        private string GenerateRefreshToken()
+        {
+            // Make random bytes
+            byte[] randomBytes = new byte[32];
+            using RandomNumberGenerator rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomBytes);
+
+            // Create refresh token from random bytes
+            string refreshToken = Convert.ToBase64String(randomBytes);
+            return refreshToken;
         }
     }
 }
