@@ -38,7 +38,7 @@ namespace JWTAuthentication.Services
 
         }
 
-        public async Task<string?> LoginAsync(UserDto userDto)
+        public async Task<TokenResponseDto?> LoginAsync(UserDto userDto)
         {
             User? user = await dbContext.Users.FirstOrDefaultAsync(u => u.Username == userDto.Username);
             if (user != null)
@@ -48,8 +48,8 @@ namespace JWTAuthentication.Services
 
                 if (result == PasswordVerificationResult.Success)
                 {
-                    string token = CreateToken(user);
-                    return token;
+                    TokenResponseDto tokenResponseDto = await CreateTokenResponse(user);
+                    return tokenResponseDto;
                 }
             }
             return null;
