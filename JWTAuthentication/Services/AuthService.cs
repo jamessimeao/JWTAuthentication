@@ -127,5 +127,14 @@ namespace JWTAuthentication.Services
             return null;
         }
 
+        public async Task<TokenResponseDto?> RefreshTokensAsync(RefreshTokenRequestDto refreshTokenRequestDto)
+        {
+            User? user = await ValidateRefreshTokenAsync(refreshTokenRequestDto.UserId, refreshTokenRequestDto.RefreshToken);
+            if(user == null){
+                return null;
+            }
+            TokenResponseDto tokenResponseDto = await CreateTokenResponse(user);
+            return tokenResponseDto;
+        }
     }
 }
