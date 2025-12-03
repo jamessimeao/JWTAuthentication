@@ -6,6 +6,6 @@ namespace JWTAuthentication.Services
     public interface IAuthService
     {
         public Task<User?> RegisterAsync(UserDto userDto);
-        public Task<string?> LoginAsync(UserDto userDto);
+        public Task<TokenResponseDto?> LoginAsync(UserDto userDto);
     }
 }
