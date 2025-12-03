@@ -44,5 +44,12 @@ namespace JWTAuthentication.Controllers
         {
             return Ok("You are authenticated.");
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult AdminOnlyEndpoint()
+        {
+            return Ok("You are an admin.");
+        }
     }
 }
