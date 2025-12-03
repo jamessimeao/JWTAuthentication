@@ -114,5 +114,18 @@ namespace JWTAuthentication.Services
             return tokenResponseDto;
         }
 
+        private async Task<User?> ValidateRefreshTokenAsync(int userId, string refreshToken)
+        {
+            User? user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if(user != null)
+            {
+                if(user.RefreshToken == refreshToken && user.RefreshTokenExpiryTime >= DateTime.UtcNow)
+                {
+                    return user;
+                }
+            }
+            return null;
+        }
+
     }
 }
