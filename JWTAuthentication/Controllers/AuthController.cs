@@ -51,5 +51,20 @@ namespace JWTAuthentication.Controllers
         {
             return Ok("You are an admin.");
         }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult<TokenResponseDto>> RefreshToken(RefreshTokenRequestDto refreshTokenRequestDto)
+        {
+            TokenResponseDto? tokenResponseDto = await authService.RefreshTokensAsync(refreshTokenRequestDto);
+            if (tokenResponseDto != null)
+            {
+                return Ok(tokenResponseDto);
+            }
+            else
+            {
+                return Unauthorized("Invalid refresh token");
+            }
+        }
     }
 }
