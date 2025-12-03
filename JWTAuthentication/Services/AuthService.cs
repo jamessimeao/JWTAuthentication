@@ -101,5 +101,18 @@ namespace JWTAuthentication.Services
             await dbContext.SaveChangesAsync();
             return refreshToken;
         }
+
+        private async Task<TokenResponseDto> CreateTokenResponse(User user)
+        {
+            string accessToken = CreateToken(user);
+            string refreshToken = await GenerateAnsSaveRefreshTokenAsync(user);
+            TokenResponseDto tokenResponseDto = new TokenResponseDto()
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken,
+            };
+            return tokenResponseDto;
+        }
+
     }
 }
